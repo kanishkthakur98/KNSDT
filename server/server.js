@@ -17,6 +17,12 @@ app.use("^/$", (req, res, next) => {
       console.log(err);
       return res.status(500).send("Some error happened");
     }
+    app.use('/', express.static('./dist'));
+app.get('/[^\.]+$', function(req, res){
+    res.set('Content-Type', 'text/html')
+        .sendfile('./dist/index.html');
+});
+    
     return res.send(
       data.replace(
         '<div id="root"></div>',
@@ -34,3 +40,4 @@ app.use(express.static(path.resolve(__dirname, "..", "dist")));
 app.listen(PORT, () => {
   console.log(`App launched on ${PORT}`);
 });
+
